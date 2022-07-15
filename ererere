@@ -1,46 +1,46 @@
-local function teleport() 
-if game:GetService("Workspace")["_DATA"].GameFinished.Value == true then
-task.wait(5)
-game:GetService("ReplicatedStorage").endpoints.client_to_server.teleport_back_to_lobby:InvokeServer()
-end
-end
+------// Auto Leave \\------
+coroutine.resume(coroutine.create(function()
+    while task.wait(2) do
+        if getgenv().AutoFarm then
+            if  game.PlaceId ~= 8304191830 then
+
+                function afc()
+                    game.Players.LocalPlayer.PlayerGui.ResultsUI.Enabled = false
+                    task.wait(1.5)
+
+                    local VirtualInputManager = game:GetService("VirtualInputManager")
+                    local X, Y = 0, 0
+                    VirtualInputManager:SendMouseButtonEvent(X, Y, 0, true, game, 1)
+                    VirtualInputManager:SendMouseButtonEvent(X, Y, 0, false, game, 1)
+                    
+
+                    if game:GetService("Workspace")["_DATA"].GameFinished.Value == true then
+                        webhook()
+                        task.wait(2)
+                    warn("Teleporting Back To Lobby....")
+                    game:GetService("ReplicatedStorage").endpoints.client_to_server.teleport_back_to_lobby:InvokeServer()
+                    task.wait(15)
+                    end
+                end
+
+                function clicknext()
+                    if game.Players.LocalPlayer.PlayerGui.ResultsUI.Enabled == true then
+                        for i,v in pairs(getconnections(game.Players.LocalPlayer.PlayerGui.ResultsUI.Holder.Buttons.Next.Activated)) do
+                            v:Fire()
+                        end
+                    end
+                end
 
 
-if game.PlaceId == 8304191830 then
-while true do
-join()
-task.wait(1)
-Create()
-task.wait(1)
-start2()
-task.wait()
-WatermarkForIdiotYter()
-task.wait(5)
-end
-elseif game.PlaceId == 8349889591 then
-repeat wait() until game:IsLoaded()
-task.wait(20) -- Waits for the game remotes to load (This is needed)
-game.Players.LocalPlayer.PlayerGui.MessageGui.Enabled = false -- Removes the annoying error messages
-_G.a = true 
-while _G.a do
-    task.wait()
-if game.Players.LocalPlayer.PlayerGui.ResultsUI.Enabled == true then --Checks if reward is ready to claim and claims it
-local button = game.Players.LocalPlayer.PlayerGui.ResultsUI.Holder.Buttons.Next
-
-local events = {"MouseButton1Click", "MouseButton1Down", "Activated"}
-for i,v in pairs(events) do
-    for i,v in pairs(getconnections(button[v])) do
-        v:Fire()
+                if game.Players.LocalPlayer.PlayerGui.ResultsUI.Enabled == true then
+                    spawn(function()
+                        clicknext()
+                    end)
+                    spawn(function()
+                        afc()
+                    end)
+                end
+            end
+        end
     end
-end
-else
-task.wait()
-place()
-place3()
-place2()
-upgrade()
-start()
-teleport()
-end
-end
-  end
+end))
